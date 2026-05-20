@@ -13,7 +13,7 @@ import org.testng.Assert;
 
 public class UserTests extends BaseTest {
 
-    @Test(dependsOnMethods = "com.hapifyme.tests.AuthTests.registerUser")
+    @Test(dependsOnMethods = "com.hapifyme.tests.AuthTests.loginUserSuccessfully")
     public void getUserProfile(){
 
         UserProfileResponse profileResponse =
@@ -43,7 +43,7 @@ public class UserTests extends BaseTest {
 
     }
 
-    @Test(dependsOnMethods = "com.hapifyme.tests.AuthTests.registerUser")
+    @Test(dependsOnMethods = "getUserProfile")
     public void updateUserProfile(){
 
         String firstNameUpdated = TestContext.firstName + "_updated";
@@ -83,7 +83,7 @@ public class UserTests extends BaseTest {
 
     }
 
-    @Test(dependsOnMethods = "com.hapifyme.tests.AuthTests.loginUserSuccessfully")
+    @Test(dependsOnMethods = "updateUserProfile")
     public void deleteUserProfile(){
 
         given()

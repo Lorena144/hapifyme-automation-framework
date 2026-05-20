@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class HomePage {
+
     private static final Logger logger =
             LoggerFactory.getLogger(HomePage.class);
 

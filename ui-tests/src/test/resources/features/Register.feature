@@ -1,5 +1,6 @@
 Feature: Register functionality
 
+  @regression
   Scenario: Successful register
     Given user is on register page
     When  user fills register form

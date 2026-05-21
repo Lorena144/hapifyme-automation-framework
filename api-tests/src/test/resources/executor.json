@@ -1,0 +1,5 @@
+{
+  "name": "Local Execution",
+  "type": "Maven",
+  "buildName": "API Automation Tests"
+}

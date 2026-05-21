@@ -1,5 +1,6 @@
 Feature: Login functionality
 
+  @smoke
   Scenario: Successful login
     Given user is on login page
     When user enters email "demo.user@hapifyme.test"
@@ -7,6 +8,7 @@ Feature: Login functionality
     And user clicks the login button
     Then user should be redirected to home page
 
+  @regression
   Scenario Outline: Invalid login
     Given user is on login page
     When user enters email "<email>"

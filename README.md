@@ -22,6 +22,7 @@ The project focuses on building a maintainable and scalable automation framework
 - Awaitility
 
 ## Logging
+- Allure Reports
 - SLF4J + Logback
 
 ---
@@ -95,7 +96,8 @@ api-tests
 │
 ├── src/test/java
 │   ├── context
-│   └── tests
+│   ├── tests
+│   └── utils
 │
 └── src/test/resources
 ```
@@ -104,11 +106,20 @@ api-tests
 - Separation of concerns
 - Reusable page objects
 - Reusable API request/response models
-- Centralized configuration management
 - Shared test context handling
-- Stable synchronization strategy using explicit waits
+- Centralized configuration management
 - Dynamic test data generation
+- Explicit waits and polling strategies
 - Clean and maintainable framework architecture
+- Reusable validation steps with Allure integration
+
+---
+
+# Reporting & Test Organization
+- Allure reporting integration for API automation
+- Request and response logging using Allure Rest Assured
+- Custom Allure steps and attachments
+- Smoke and regression test tagging using Cucumber tags
 
 ## Run
 
@@ -125,6 +136,11 @@ mvn test -pl ui-tests
 Run API tests only:
 ```bash
 mvn test -pl api-tests
+```
+
+Generate Allure Report:
+```bash
+allure serve api-tests/target/allure-results
 ```
 
 # Author

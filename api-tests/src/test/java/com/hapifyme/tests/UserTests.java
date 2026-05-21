@@ -3,7 +3,10 @@ package com.hapifyme.tests;
 import com.hapifyme.context.TestContext;
 import com.hapifyme.models.UpdateUserProfileRequest;
 import com.hapifyme.models.UserProfileResponse;
+import io.qameta.allure.*;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
@@ -11,13 +14,19 @@ import static org.hamcrest.Matchers.equalTo;
 
 import org.testng.Assert;
 
+@Epic("API Automation")
+@Feature("User Profile")
 public class UserTests extends BaseTest {
 
+    @Story("Get user profile")
+    @Description("Verify that a user profile can be retrieved")
+    @Severity(SeverityLevel.NORMAL)
     @Test(dependsOnMethods = "com.hapifyme.tests.AuthTests.loginUserSuccessfully")
     public void getUserProfile(){
 
         UserProfileResponse profileResponse =
                 given()
+                        .filter(new AllureRestAssured())
                         .header("Authorization", TestContext.apiKey)
                         .contentType(ContentType.JSON)
                         .queryParam("user_id", TestContext.userId)
@@ -28,21 +37,28 @@ public class UserTests extends BaseTest {
                         .extract()
                         .as(UserProfileResponse.class);
 
-        String extractedEmail = profileResponse.getUser().getEmail();
-        String extractedUsername = profileResponse.getUser().getUsername();
-        String extractedLastName = profileResponse.getUser().getLastName();
-        String extractedFirstName = profileResponse.getUser().getFirstName();
-
-        Assert.assertEquals(extractedEmail, TestContext.email);
-        Assert.assertEquals(extractedUsername, TestContext.username);
-        Assert.assertEquals(extractedFirstName, TestContext.firstName);
-        Assert.assertEquals(extractedLastName, TestContext.lastName);
-
-        Assert.assertEquals(profileResponse.getStatus(), "success");
-        Assert.assertNotNull(profileResponse.getUser());
+        validateUserProfile(profileResponse);
+        validateUserData(profileResponse);
 
     }
 
+    @Step("Validate user profile response")
+    public void validateUserProfile(UserProfileResponse response) {
+        Assert.assertEquals(response.getStatus(), "success");
+        Assert.assertNotNull(response.getUser());
+    }
+
+    @Step("Validate user profile data")
+    public void validateUserData(UserProfileResponse response) {
+        Assert.assertEquals(response.getUser().getEmail(), TestContext.email);
+        Assert.assertEquals(response.getUser().getUsername(), TestContext.username);
+        Assert.assertEquals(response.getUser().getFirstName(), TestContext.firstName);
+        Assert.assertEquals(response.getUser().getLastName(), TestContext.lastName);
+    }
+
+    @Story("Update user profile")
+    @Description("Verify that a user profile can be updated")
+    @Severity(SeverityLevel.NORMAL)
     @Test(dependsOnMethods = "getUserProfile")
     public void updateUserProfile(){
 
@@ -55,6 +71,7 @@ public class UserTests extends BaseTest {
                 TestContext.email, "default_profile_pic.png");
 
             given()
+                    .filter(new AllureRestAssured())
                     .header("Authorization", TestContext.apiKey)
                     .contentType(ContentType.JSON)
                     .body(updateUserProfileRequest)
@@ -64,6 +81,7 @@ public class UserTests extends BaseTest {
                     .statusCode(200)
                     .body("status", equalTo("success"));
 
+        Allure.addAttachment("Updated first name", firstNameUpdated);
 
         UserProfileResponse updatedProfileResponse =
                 given()
@@ -77,34 +95,64 @@ public class UserTests extends BaseTest {
                         .extract()
                         .as(UserProfileResponse.class);
 
-        Assert.assertEquals(updatedProfileResponse.getStatus(), "success");
-        Assert.assertEquals(updatedProfileResponse.getUser().getFirstName(), firstNameUpdated);
+        validateUserDataUpdate(updatedProfileResponse, firstNameUpdated);
         TestContext.firstName = firstNameUpdated;
 
     }
 
+    @Step("Validate updated user profile data")
+    public void validateUserDataUpdate(UserProfileResponse response, String expectedFirstName) {
+        Assert.assertEquals(response.getStatus(), "success");
+        Assert.assertEquals(response.getUser().getFirstName(), expectedFirstName);
+
+    }
+
+    @Story("Delete user")
+    @Description("Verify that a user can be deleted")
+    @Severity(SeverityLevel.NORMAL)
     @Test(dependsOnMethods = "updateUserProfile")
     public void deleteUserProfile(){
 
-        given()
-                .header("Authorization", "Bearer " + TestContext.bearerToken)
-                .contentType(ContentType.JSON)
-        .when()
-                .delete("/user/delete_profile.php")
-        .then()
-                .statusCode(200)
-                .body("status", equalTo("success"));
+        Response deleteResponse = given()
+                    .filter(new AllureRestAssured())
+                    .header("Authorization", "Bearer " + TestContext.bearerToken)
+                    .contentType(ContentType.JSON)
+                .when()
+                    .delete("/user/delete_profile.php")
+                .then()
+                    .statusCode(200)
+                    .extract()
+                    .response();
 
+        validateDeletedUserResponse(deleteResponse.jsonPath().getString("status"));
+        Allure.addAttachment("Deleted user ID", TestContext.userId);
 
-        given()
-                .header("Authorization", TestContext.apiKey)
-                .contentType(ContentType.JSON)
-                .queryParam("user_id", TestContext.userId)
-        .when()
-                .get("/user/get_profile.php")
-        .then()
-                .statusCode(200)
-                .body("status", equalTo("error"))
-                .body("message", equalTo("User not found."));
+        Response deletedProfileResponse = given()
+                    .header("Authorization", TestContext.apiKey)
+                    .contentType(ContentType.JSON)
+                    .queryParam("user_id", TestContext.userId)
+                .when()
+                    .get("/user/get_profile.php")
+                .then()
+                    .statusCode(200)
+                    .extract()
+                    .response();
+
+        validateDeletedProfileResponse(
+                deletedProfileResponse.jsonPath().getString("status"),
+                deletedProfileResponse.jsonPath().getString("message"));
+    }
+
+    @Step("Validate deleted user response")
+    public void validateDeletedUserResponse(String status) {
+        Assert.assertEquals(status, "success");
+
+    }
+
+    @Step("Validate profile response after delete")
+    public void validateDeletedProfileResponse(String status, String message) {
+        Assert.assertEquals(status, "error");
+        Assert.assertEquals(message, "User not found.");
+
     }
 }

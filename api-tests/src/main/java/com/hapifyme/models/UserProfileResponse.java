@@ -68,4 +68,11 @@ public class UserProfileResponse {
             return profilePic;
         }
     }
+
+    @Override
+    public String toString() {
+        return "UserProfileResponse{" +
+                "status='" + status + '\'' +
+                '}';
+    }
 }

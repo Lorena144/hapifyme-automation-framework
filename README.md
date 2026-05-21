@@ -5,6 +5,7 @@ Test automation framework built using Java, Maven, Selenide, Cucumber BDD, Rest 
 The project focuses on building a maintainable and scalable automation framework covering both UI and API testing using reusable components, clean architecture and separation of concerns.
 
 ---
+![CI](https://github.com/Lorena144/hapifyme-automation-framework/actions/workflows/tests.yml/badge.svg)
 
 # Tech Stack
 
@@ -142,6 +143,3 @@ Generate Allure Report:
 ```bash
 allure serve api-tests/target/allure-results
 ```
-
-# Author
-Built as a personal QA Automation portfolio project focused on transitioning from Manual QA to Automation QA.

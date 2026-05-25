@@ -62,6 +62,14 @@ jobs:
           name: ui-logs
           path: ui-tests/logs
 
+      # Merge Allure results
+      - name: Merge Allure results
+        if: always()
+        run: |
+          mkdir -p combined-allure-results
+          cp -r api-tests/target/allure-results/* combined-allure-results/ || true
+          cp -r ui-tests/target/allure-results/* combined-allure-results/ || true          
+
       # Generate Allure report
       - name: Generate Allure Report
         uses: simple-elf/allure-report-action@master

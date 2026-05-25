@@ -40,13 +40,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2
 
-      # Run UI tests
-      - name: Run UI tests
-        run: mvn clean test -pl ui-tests -am
-
-      # Run API tests
-      - name: Run API tests
-        run: mvn clean test -pl api-tests -am
+      # Run all tests
+      - name: Run all tests
+        run: mvn clean test
 
       # Upload Surefire reports
       - name: Upload Surefire reports

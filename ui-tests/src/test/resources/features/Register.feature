@@ -12,3 +12,4 @@ Feature: Register functionality
       | confirmPassword | DemoPass123!            |
     And user clicks the register button
     Then the successful registration message should be displayed
+

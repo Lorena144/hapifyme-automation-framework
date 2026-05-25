@@ -7,6 +7,7 @@ public class TestContext {
     public static String password;
     public static String firstName;
     public static String lastName;
+    public static String postMessage;
 
     public static String userId;
     public static String apiKey;

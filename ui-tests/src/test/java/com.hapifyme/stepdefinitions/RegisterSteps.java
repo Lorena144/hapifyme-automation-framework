@@ -3,7 +3,7 @@ package com.hapifyme.stepdefinitions;
 import com.hapifyme.models.RegisterUser;
 import com.hapifyme.pages.LoginPage;
 import com.hapifyme.pages.RegisterPage;
-import com.hapifyme.utils.TestDataGenerator;
+import com.hapifyme.utils.DataGenerator;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -30,7 +30,7 @@ public class RegisterSteps {
 
         // Generate unique email for each execution
         String uniqueEmail =
-                TestDataGenerator.generateUniqueEmail(data.get("email"));
+                DataGenerator.generateRandomEmail();
 
         user.setFirstName(data.get("firstName"));
         user.setLastName(data.get("lastName"));

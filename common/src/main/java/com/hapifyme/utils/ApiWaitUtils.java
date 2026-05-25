@@ -1,12 +1,11 @@
 package com.hapifyme.utils;
 
+import io.restassured.RestAssured;
+import org.awaitility.Awaitility;
+import org.hamcrest.Matchers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static io.restassured.RestAssured.given;
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.await;
-import static org.hamcrest.Matchers.equalTo;
 
 public class ApiWaitUtils {
 
@@ -34,14 +33,14 @@ public class ApiWaitUtils {
                 expectedStatus
         );
 
-        await()
+        Awaitility.await()
                 .alias("Waiting for expected API status")
                 .atMost(20, SECONDS)
                 .pollInterval(2, SECONDS)
 
                 .untilAsserted(() -> {
 
-                    given()
+                    RestAssured.given()
                             .header("Authorization", apiKey)
 
                     .when()
@@ -49,7 +48,7 @@ public class ApiWaitUtils {
 
                     .then()
                             .statusCode(expectedStatusCode)
-                            .body("status", equalTo(expectedStatus));
+                            .body("status", Matchers.equalTo(expectedStatus));
                 });
 
         logger.info("Expected status confirmed");

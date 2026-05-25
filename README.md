@@ -26,6 +26,11 @@ The project focuses on building a maintainable and scalable automation framework
 - Allure Reports
 - SLF4J + Logback
 
+## DevOps & CI/CD
+- GitHub Actions
+- Docker
+- DockerHub
+
 ---
 
 # Current Automated Flows
@@ -56,12 +61,19 @@ The project focuses on building a maintainable and scalable automation framework
 
 ---
 
+## UI ↔ API Integration Flows
+- Create user through API → login through UI
+- Login through UI → create post → validate post through API
+
+---
+
 # Project Structure
 ```txt
 hapifyme-automation-framework
 │
 ├── ui-tests
 ├── api-tests
+├── common
 └── pom.xml
 ```
 # UI Framework Structure
@@ -70,11 +82,11 @@ ui-tests
 │
 ├── src/main/java
 │   ├── models
-│   ├── pages
-│   └── utils
+│   └── pages
 │
 ├── src/main/resources
-│   └── config
+│   ├── config
+│   └── logback.xml
 │
 ├── src/test/java
 │   ├── hooks
@@ -82,25 +94,23 @@ ui-tests
 │   └── stepdefinitions
 │
 └── src/test/resources
-    └── features	
+    ├── features
+    └── logback-test.xml
 ```
 # API Framework Structure
 ```txt
 api-tests
 │
 ├── src/main/java
-│   ├── models
-│   └── utils
+│   └── com.hapifyme
+│       ├── models
+│       └── services
 │
 ├── src/main/resources
 │   └── config
 │
-├── src/test/java
-│   ├── context
-│   ├── tests
-│   └── utils
-│
-└── src/test/resources
+└── src/test/java
+    └── tests
 ```
 
 # Implemented Design Principles
@@ -111,16 +121,39 @@ api-tests
 - Centralized configuration management
 - Dynamic test data generation
 - Explicit waits and polling strategies
+- Modular multi-module Maven architecture
 - Clean and maintainable framework architecture
 - Reusable validation steps with Allure integration
 
 ---
 
 # Reporting & Test Organization
-- Allure reporting integration for API automation
-- Request and response logging using Allure Rest Assured
+- Allure reporting integration
 - Custom Allure steps and attachments
+- Request and response logging using Allure Rest Assured
 - Smoke and regression test tagging using Cucumber tags
+- GitHub Actions CI pipeline with Allure report publishing
+
+---
+
+# Docker
+
+Build Docker image locally:
+```bash
+docker build -t hapifyme-automation-framework .
+```
+
+Run tests inside Docker container:
+```bash
+docker run hapifyme-automation-framework
+```
+
+DockerHub image:
+```bash
+docker pull lorenab144/hapifyme-automation-framework
+```
+
+---
 
 ## Run
 

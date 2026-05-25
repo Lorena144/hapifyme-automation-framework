@@ -1,7 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","0","loginUserSuccessfully","Surefire suite","Mon May 25 11:39:37 UTC 2026","skipped","Mon May 25 11:39:37 UTC 2026","com.hapifyme.tests.AuthTests","Surefire test","com.hapifyme.tests.AuthTests","loginUserSuccessfully"
-"","0","loginUserUnsuccessfully","Surefire suite","Mon May 25 11:39:37 UTC 2026","skipped","Mon May 25 11:39:37 UTC 2026","com.hapifyme.tests.AuthTests","Surefire test","com.hapifyme.tests.AuthTests","loginUserUnsuccessfully"
-"Verify that a user profile can be updated","0","updateUserProfile","Surefire suite","Mon May 25 11:39:37 UTC 2026","skipped","Mon May 25 11:39:37 UTC 2026","com.hapifyme.tests.UserTests","Surefire test","com.hapifyme.tests.UserTests","updateUserProfile"
-"Verify that a user profile can be retrieved","4","getUserProfile","Surefire suite","Mon May 25 11:39:37 UTC 2026","broken","Mon May 25 11:39:37 UTC 2026","com.hapifyme.tests.UserTests","Surefire test","com.hapifyme.tests.UserTests","getUserProfile"
-"","3320","registerUser","Surefire suite","Mon May 25 11:39:33 UTC 2026","failed","Mon May 25 11:39:36 UTC 2026","com.hapifyme.tests.AuthTests","Surefire test","com.hapifyme.tests.AuthTests","registerUser"
-"Verify that a user can be deleted","0","deleteUserProfile","Surefire suite","Mon May 25 11:39:37 UTC 2026","skipped","Mon May 25 11:39:37 UTC 2026","com.hapifyme.tests.UserTests","Surefire test","com.hapifyme.tests.UserTests","deleteUserProfile"

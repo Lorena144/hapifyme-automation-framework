@@ -31,6 +31,8 @@ public class Hooks{
         Configuration.browser = properties.getProperty("browser");
         Configuration.baseUrl = properties.getProperty("baseUrl");
         Configuration.browserSize = properties.getProperty("browserSize");
+
+        Configuration.headless = true;
     }
 
     @After

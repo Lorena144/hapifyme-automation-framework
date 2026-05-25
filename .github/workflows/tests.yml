@@ -42,11 +42,11 @@ jobs:
 
       # Run UI tests
       - name: Run UI tests
-        run: mvn clean test -pl ui-tests
+        run: mvn clean test -pl ui-tests -am
 
       # Run API tests
       - name: Run API tests
-        run: mvn clean test -pl api-tests
+        run: mvn clean test -pl api-tests -am
 
       # Upload Surefire reports
       - name: Upload Surefire reports

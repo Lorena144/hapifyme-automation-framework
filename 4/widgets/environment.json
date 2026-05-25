@@ -1,0 +1,1 @@
+[{"values":["QA"],"name":"Environment"},{"values":["https://apps.qualiadept.eu/hapifyme/api"],"name":"BaseUrl"},{"values":["21"],"name":"JavaVersion"},{"values":["RestAssured + TestNG"],"name":"Framework"}]
